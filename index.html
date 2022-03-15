@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>YU·BLOG</title>
+    <link rel="icon" href="https://docsify.js.org/_media/favicon.ico">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <link rel="stylesheet" href="https://unpkg.com/docsify/themes/vue.css">
+    <link rel="stylesheet" href="https://unpkg.com/docsify-toc@1.0.0/dist/toc.css">
+    <!-- 侧边栏-箭头 -->
+    <!--    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify-sidebar-collapse/dist/sidebar.min.css" />-->
+    <!-- 侧边栏-文件夹 -->
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify-sidebar-collapse/dist/sidebar-folder.min.css" />
+
+    <script>
+        var _hmt = _hmt || [];
+        //百度统计
+        (function () {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+    <script>
+        function getEditBtn(){
+            let url = window.location.href
+            let hashIndex = url.indexOf("#/")
+            if (hashIndex!=-1) {
+                let path = url.substr(hashIndex+2)
+                let editUrl= "https://github.com/ofuago/note/blob/main/"
+                if(editUrl.substr(editUrl.length-1,editUrl.length)!='/'){
+                    editUrl += "/"
+                }
+                editUrl = editUrl+path
+                if (editUrl.substr(editUrl.length-1,editUrl.length)=="/"){
+                    editUrl+="README.md"
+                }else{
+                    editUrl+=".md"
+                }
+                let endIndex = editUrl.indexOf("?")
+                endIndex = (endIndex>-1?endIndex:editUrl.length)
+                editUrl = editUrl.substr(0,endIndex)
+                return `[在github上编辑](${editUrl})`
+            }
+            return ""
+        }
+    </script>
+
+</head>
+<body>
+<div id="app"></div>
+<script>
+    window.$docsify = {
+        name: 'note',
+        repo: 'ofuago/note',
+        routerMode: 'hash',
+        plugins: [
+            function (hook, vm) {
+                hook.beforeEach(function (str) {
+                    let editBtn = getEditBtn()
+                    try {
+                        console.log(str,editBtn)
+                        let length = (str.match(/^(\s*#){1}\s+.*\n/)[0]).length
+                        str = str.slice(0,length)+`\n ${editBtn} \n`+str.slice(length)  //Hello-local,world!
+                    }catch (e){
+                    }
+                    return str;
+                });
+            },
+        ],
+        pagination: {
+            previousText: '上一章节',
+            nextText: '下一章节',
+            crossChapter: true,
+            crossChapterText: true,
+        },
+        toc: {
+            scope: '.markdown-section',
+            headings: 'h1, h2, h3',
+            title: '&nbsp;',
+        },
+        loadSidebar: true,
+        subMaxLevel: 1,
+        auto2top: true,// 切换文档自动回顶部
+        search: {
+            maxAge: 86400000,// 索引过期时间，单位毫秒，默认一天
+            paths: 'auto',
+            placeholder: '搜索',
+            noData: '找不到结果',
+            depth: 3,// 搜索标题的最大层级, 1 - 6
+            hideOtherSidebarContent: false, // 是否隐藏其他侧边栏内容
+        },
+        sidebarDisplayLevel: 1,//sidebar文件夹层级
+        count: {countable: true, fontsize: '0.9em', color: 'rgb(90,90,90)', language: 'chinese'},
+    }
+</script>
+<!-- Docsify v4 -->
+<script src="//cdn.jsdelivr.net/npm/docsify@4"></script>
+<script src="//cdn.jsdelivr.net/npm/docsify-copy-code"></script>
+<script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/search.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/zoom-image.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/emoji.min.js"></script>
+<script src="//unpkg.com/docsify-toc@1.0.0/dist/toc.js"></script>
+<script src="//unpkg.com/docsify-count/dist/countable.js"></script>
+<script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-python.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-bash.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-php.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/docsify-pagination/dist/docsify-pagination.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/docsify-sidebar-collapse/dist/docsify-sidebar-collapse.min.js"></script>
+<style>
+    img{
+        max-height: 500px;
+    }
+</style>
+</body>
+</html>
